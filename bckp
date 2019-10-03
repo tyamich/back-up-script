@@ -3,7 +3,7 @@
 # на сервере qsoftbk@144.76.28.102 создаем каталог, где будут хранится скрипт и бекапы
 #mkdir /mnt/qsoftbk/backup
 
-
+cd /home/backups/databases; tar -cvz . | ssh qsoftbk@144.76.28.102 'cat > /mnt/qsoftbk/backup//test.tar.gz'
 
 #делаем бекап каталогов из сервера, откуда будем делать бекапы (file) на сервер куда будут идти бекапы (qsoft-bak)
 #бекап архивов баз данных
