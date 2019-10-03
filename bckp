@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# на сервере qsoftbk@144.76.28.102 создаем каталоги, где будут хранится скрипт и бекапы
+#mkdir /mnt/qsoftbk/backup
+#mkdir /mnt.qsoft/backup/backups
+
+
+
+#делаем бекап каталогов из сервера, откуда будем делать бекапы (file) на сервер куда будут идти бекапы (qsoft-bak)
+#бекап архивов баз данных
+cd /home/backups/databases; tar czf - . | ssh qsoftbk@144.76.28.102  "cd /mnt.qsoft/backup/backups/; cat > databases-`date "+%Y-%m-%d"`.tgz 
+
+#бекап боевых сайтов
+cd /home/backups/files/external; tar czf - . | ssh qsoftbk@144.76.28.102  "cd /mnt.qsoft/backup/backups/; cat > external-`date "+%Y-%m-%d"`.tgz
+
+#бекап внутренних сервисов
+cd /home/backups/files/qsoft; tar czf - . | ssh qsoftbk@144.76.28.102  "cd /mnt.qsoft/backup/backups/; cat > files_qsoft-`date "+%Y-%m-%d"`.tgz
+cd /home/backups/other/qsoft; tar czf - . | ssh qsoftbk@144.76.28.102  "cd /mnt.qsoft/backup/backups/; cat > other_qsoft-`date "+%Y-%m-%d"`.tgz
+
+#удаляем резервные копии старше 5 дней
+ssh qsoftbk@144.76.28.102 "find ./backups -mtime +5 -print -delete"
+
+#бекап называю backup.sh. Потом меняю права chmod u+x backup.sh
+#в кроне добавляю строчку в /etc/crontab на серваке qsoft@files.crt
+# minute hour mday month wday who         command
+  0      02   *    *     *    qsoftbk /home/backups/backup.sh
