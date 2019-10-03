@@ -1,8 +1,8 @@
 #!/bin/sh
 
 #создаем каталоги, где будут хранится скрипт и бекапы
-mkdir /mnt/qsoftbk/backup
-mkdir /mnt.qsoft/backup/backups
+#mkdir /mnt/qsoftbk/backup
+#mkdir /mnt.qsoft/backup/backups
 
 #переходим в каталог, где лежит скрипт
 cd /mnt/qsoftbk/backup
