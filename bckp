@@ -20,4 +20,4 @@ ssh qsoftbk@144.76.28.102 "find ./backups -mtime +5 -print -delete"
 #бекап называю backup.sh. Потом меняю права chmod u+x backup.sh
 #в кроне добавляю строчку в /etc/crontab на серваке qsoft@files.crt
 # minute hour mday month wday who         command
-  0      02   *    *     *    qsoftbk /home/backups/backup.sh
+#  0      02   *    *     *    qsoftbk /home/backups/backup.sh
