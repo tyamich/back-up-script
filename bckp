@@ -3,18 +3,16 @@
 # на сервере qsoftbk@144.76.28.102 создаем каталог, где будут хранится скрипт и бекапы
 #mkdir /mnt/qsoftbk/backup
 
-cd /home/backups/databases; tar -cvz . | ssh qsoftbk@144.76.28.102 'cat > /mnt/qsoftbk/backup/test.tar.gz'
-
 #делаем бекап каталогов из сервера, откуда будем делать бекапы (file) на сервер куда будут идти бекапы (qsoft-bak)
 #бекап архивов баз данных
-cd /home/backups/databases; tar czf - . | ssh qsoftbk@144.76.28.102  "cd /mnt/qsoftbk/backup/; cat > databases-`date "+%Y-%m-%d"`.tgz 
+cd /home/backups/databases; tar -cvz . | ssh qsoftbk@144.76.28.102 'cat > /mnt/qsoftbk/backup/databases$(date +"%Y-%m-%d").tar.gz' 
 
 #бекап боевых сайтов
-cd /home/backups/files/external; tar czf - . | ssh qsoftbk@144.76.28.102  "cd /mnt/qsoftbk/backup/; cat > external-`date "+%Y-%m-%d"`.tgz
+cd /home/backups/files/external; tar -cvz . | ssh qsoftbk@144.76.28.102 'cat > /mnt/qsoftbk/backup/external$(date +"%Y-%m-%d").tar.gz'
 
 #бекап внутренних сервисов
-cd /home/backups/files/qsoft; tar czf - . | ssh qsoftbk@144.76.28.102  "cd /mnt/qsoftbk/backup/; cat > files_qsoft-`date "+%Y-%m-%d"`.tgz
-cd /home/backups/other/qsoft; tar czf - . | ssh qsoftbk@144.76.28.102  "cd /mnt/qsoftbk/backup/; cat > other_qsoft-`date "+%Y-%m-%d"`.tgz
+cd /home/backups/files/qsoft; tar -cvz . | ssh qsoftbk@144.76.28.102 'cat > /mnt/qsoftbk/backup/files_qsoft$(date +"%Y-%m-%d").tar.gz'
+cd /home/backups/other/qsoft; tar -cvz . | ssh qsoftbk@144.76.28.102 'cat > /mnt/qsoftbk/backup/other_qsoft$(date +"%Y-%m-%d").tar.gz'
 
 #удаляем резервные копии старше 5 дней
 ssh qsoftbk@144.76.28.102 "find ./backups -mtime +5 -print -delete"
