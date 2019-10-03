@@ -13,8 +13,8 @@ cd /home/backups/databases; tar czf - . | ssh qsoftbk@144.76.28.102  "cd /mnt/qs
 cd /home/backups/files/external; tar czf - . | ssh qsoftbk@144.76.28.102  "cd /mnt/qsoftbk/backup/; cat > external-`date "+%Y-%m-%d"`.tgz
 
 #бекап внутренних сервисов
-cd /home/backups/files/qsoft; tar czf - . | ssh qsoftbk@144.76.28.102  "cd /mnt.qsoft/backup/; cat > files_qsoft-`date "+%Y-%m-%d"`.tgz
-cd /home/backups/other/qsoft; tar czf - . | ssh qsoftbk@144.76.28.102  "cd /mnt.qsoft/backup/; cat > other_qsoft-`date "+%Y-%m-%d"`.tgz
+cd /home/backups/files/qsoft; tar czf - . | ssh qsoftbk@144.76.28.102  "cd /mnt/qsoftbk/backup/; cat > files_qsoft-`date "+%Y-%m-%d"`.tgz
+cd /home/backups/other/qsoft; tar czf - . | ssh qsoftbk@144.76.28.102  "cd /mnt.qsoftbk/backup/; cat > other_qsoft-`date "+%Y-%m-%d"`.tgz
 
 #удаляем резервные копии старше 5 дней
 ssh qsoftbk@144.76.28.102 "find ./backups -mtime +5 -print -delete"
