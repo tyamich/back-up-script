@@ -1,0 +1,9 @@
+#!/bin/bash
+
+OLD=$(date -d \’-5 day\’+'%Y-%m-%d')
+
+BACKUP=/bk/backup/backups/
+
+OLD_FILE=$BACKUP/fs-full-$OLD.tar.gz
+
+rm -f $OLD_FILE
