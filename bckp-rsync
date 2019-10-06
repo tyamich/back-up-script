@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# на сервере qsoftbk@144.76.28.102 создаем каталог, где будут хранится скрипт и бекапы
+#mkdir /mnt/qsoftbk/backup
+
+#делаем бекап каталогов из сервера, откуда будем делать бекапы (file) на сервер куда будут идти бекапы (qsoft-bak)
+#бекап архивов баз данных
+rsync -h -v -r -P -t /home/backups/databases/ qsoftbk@144.76.28.102:/mnt/qsoftbk/backup/databases$(date +"%Y-%m-%d")
+
+#бекап боевых сайтов
+rsync -azvP /home/backups/files/qsoft/ qsoftbk@144.76.28.102:/mnt/qsoftbk/backup/external$(date +"%Y-%m-%d")
+
+#бекап внутренних сервисов
+rsync -azvP /home/backups/files/qsoft/ qsoftbk@144.76.28.102:/mnt/qsoftbk/backup/files_qsoft$(date +"%Y-%m-%d")
+rsync -azvP /home/backups/other/qsoft/ qsoftbk@144.76.28.102:/mnt/qsoftbk/backup/other_qsoft$(date +"%Y-%m-%d")
+
+#удаляем резервные копии старше 5 дней
+ssh qsoftbk@144.76.28.102 "find /mnt/qsoftbk/backup/ -mtime +5 -print -delete"
+
+#бекап называю backup.sh. Потом меняю права chmod u+x backup.sh
+#в кроне добавляю строчку в /etc/crontab на серваке qsoft@files.crt
+# minute hour mday month wday who         command
+#  0      02   *    *     *    qsoftbk /home/backups/backup.sh
